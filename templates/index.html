@@ -1,0 +1,48 @@
+{%extends 'layout.html'%} {%block title%} to-do-flask-app {%endblock%} {%block
+content%}
+
+<h2>To Do List</h2>
+
+<div class="input-group flex-nowrap mx-3 my-3">
+  <form action="{{url_for('add')}}" method="post">
+    <span class="input-group-text" id="addon-wrapping">
+      <input type="text" name="todo" class="form-control" placeholder="Add New Task ..." aria-label="Username"
+        aria-describedby="addon-wrapping" />
+      <button type="submit" class="btn btn-outline-success mx-2">Add</button>
+    </span>
+  </form>
+</div>
+
+<div class="container mt-4 list-type rounded">
+  <ul class="list-group fit-content ">
+    {% for todo in todos %}
+
+    <li class="list-group-item">
+      <div class="form-check">
+        <input class="form-check-input p-2" name="done"
+        {% if todo['done'] %}  
+          checked {% endif %}
+          onchange="this.form.submit()"
+        type="checkbox" id="flexCheckDisabled" disabled />
+        <span {% if todo['done'] %} style="text-decoration: line-through;" {% endif %}>
+        {{todo['task']}}</span>
+        <label class="form-check-label" for="flexCheckDisabled">
+        </label>
+        <button type="submit" class="btn btn-outline-secondary mx-2">
+          <a href="{{url_for('check',index=loop.index0)}}" style="text-decoration: none;color:black">Check</a>
+        </button>
+        <button type="submit" class="btn btn-outline-primary mx-2">
+          <a href="{{url_for('edit',index=loop.index0)}}"  style="text-decoration: none;color:blue">Edit</a>
+        </button>
+        <button type="submit" class="btn btn-outline-danger mx-2">
+          <a href="{{url_for('delete',index=loop.index0)}}"  style="text-decoration: none;color:red">Delete</a>
+        </button>
+        
+      </div>
+    </li>
+
+    {%endfor%}
+  </ul>
+</div>
+
+{%endblock%}
